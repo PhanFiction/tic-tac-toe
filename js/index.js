@@ -3,9 +3,13 @@ document.querySelector('#x').addEventListener('click', setPlayer);
 document.querySelector('#o').addEventListener('click', setPlayer);
 let player = document.querySelector('.active').id;
 let playerTurn = true;
+let filledSlots = [];
 
 
-// need player to choose which role. X or O
+/*
+1. Check if game is won
+2. Implement AI with minmax algorithm
+*/
 
 function createBoard() {
   for(let i = 0; i < 3*3; i++){
@@ -18,9 +22,10 @@ function createBoard() {
 
 function markScreen(event) {
   const gridItem = document.getElementById(event.target.id);
-  let newText = document.createElement('p');
-  gridItem.textContent = 'X';
-  //gridItem.appendChild(newText);
+  if(!filledSlots.includes(event.target.id)){
+    player === 'x' ? gridItem.textContent = 'X' : gridItem.textContent = 'O';
+    filledSlots.push(event.target.id);
+  }
 }
 
 
@@ -40,9 +45,8 @@ function setPlayer(event){
 }
 
 function resetGame(){
-  document.querySelectorAll('.grid-item').forEach(item => {
-    item.textContent = '';
-  })
+  document.querySelectorAll('.grid-item').forEach(item => item.textContent = '');
+  filledSlots = [];
 }
 
 
